@@ -2,7 +2,7 @@
 prometheus-webhook 服务
 
 用于prometheus webwook接口报警。该服务主要是云片网的接口短信报警和邮件报警。必须要添加邮件告警组，将用户添加到告警组中即可。
-django的我觉的一般运维也都会的 db用的是sqllite. 简单易用。其他的报警抑制 沉默就靠prometheus了。
+ db用的是sqllite. 简单易用。其他的报警抑制 沉默就靠prometheus了。
 
 配置项
 
