@@ -1,0 +1,32 @@
+global:
+  resolve_timeout: 15s
+templates: 
+#- '/etc/alertmanager/template/*.tmpl'
+route:
+  group_by: ['InstanceStatus','InstanceHighCpu']
+  group_wait: 2m
+  group_interval: 2m
+  repeat_interval: 2m
+  receiver: 'ops'
+
+  routes:
+    - match:
+        severity: open-door
+      receiver: open-door
+
+inhibit_rules:
+- source_match:
+   severity: 'critical'
+  target_match:
+    severity: 'warning'
+  equal: ['alertname', 'cluster', 'service']
+
+
+receivers:
+- name: 'ops'
+  webhook_configs:
+  - url: http://alertservice.xxxx.com/sendmessage/
+
+- name: 'open-door'
+  webhook_configs:
+  - url: http://alertservice.xxxx.com/sendmessage/
