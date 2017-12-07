@@ -1,0 +1,68 @@
+ALERT OpendoorStatus
+  IF up{job="open-door"} == 0
+  FOR 10s
+  LABELS { severity = "open-door" }
+  ANNOTATIONS {
+    description = "open door {{ $labels.instance }}  已当机超过 20s"
+  }
+
+ALERT SsoLoginStatus
+  IF login_sso_status{job="open-door"} > 0
+  FOR 10s
+  LABELS { severity = "open-door" }
+  ANNOTATIONS {
+    description = "sso {{ $labels.instance }}  无法登陆"
+  }
+
+ALERT Status_Card
+  IF status_card_status{job="open-door"} > 0
+  FOR 10s
+  LABELS { severity = "open-door" }
+  ANNOTATIONS {
+    description = " {{ $labels.instance }} 刷卡无法开门"
+  }
+
+ALERT Etcd_Status_Fail
+  IF etcd_status_fail{job="open-door"} > 0
+  FOR 10s
+  LABELS { severity = "open-door" }
+  ANNOTATIONS {
+    description = " {{ $labels.instance }} etcd缺少必要键值"
+  }
+
+ALERT Status_Wechat
+  IF status_wechat_status{job="open-door"} > 0
+  FOR 10s
+  LABELS { severity = "open-door" }
+  ANNOTATIONS {
+    description = " {{ $labels.instance }} 微信扫码无法开门" 
+  }
+
+ALERT InstanceStatus
+  IF up{job="aws-ec2"} == 0
+  FOR 10s
+  LABELS { severity = "page" }
+  ANNOTATIONS {
+    description = "服务器 {{ $labels.instance }}  已当机超过 20s"
+  }
+
+ALERT InstanceHighCpu
+  IF (100 - (avg(irate(node_cpu{job="aws-ec2",mode="idle"}[5m])) BY (instance) * 100)) > 95
+  FOR 10m LABELS { serverity = "page"}
+  ANNOTATIONS {
+     description = "服务器 {{ $labels.instance }}  CPU过高"
+    }
+
+ALERT InstanceLowMemory
+  IF (((node_memory_MemTotal-node_memory_MemFree-node_memory_Cached-node_memory_Buffers)/(node_memory_MemTotal)*100)) > 95
+ FOR 10m LABELS { serverity = "page"}
+  ANNOTATIONS {
+   description = "服务器 {{ $labels.instance }} 内存使用率大于%90"
+  }
+
+ALERT instanceLowDisk
+  IF node_filesystem_avail{fstype="rootfs",mountpoint="/"} < 5368709120
+ FOR 10m LABELS { serverity = "page"}
+  ANNOTATIONS {
+   description = "服务器 {{ $labels.instance }}  磁盘剩余5G"
+  }
