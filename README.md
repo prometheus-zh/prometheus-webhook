@@ -1,7 +1,11 @@
 # prometheus-webhook
 prometheus-webhook 服务
 
-用于prometheus webwook接口报警。该服务主要是云片网的接口短信报警和邮件报警。必须要添加邮件告警组，将用户添加到告警组中即可。
+#如何使用：
+ 将代码拉取下去，python manager.py syncdb设置登录admin的账号密码，接下来python runserver 0.0.0.0:8080 启动服务
+ 
+
+用于prometheus webwook接口报警。该服务主要是云片网的接口短信报警和邮件报警。必须要添加告警组，将用户添加到告警组中即可。报警的时候是以组为单位。
  db用的是sqllite. 简单易用。其他的报警抑制 沉默就靠prometheus了。
 
 配置项
@@ -20,10 +24,16 @@ ip白名单:需要在Ip中配置允许哪些Ip地址访问告警接口
 
 如何调用告警接口
 
-首先需要配置ip白名单，允许调用。接下来按照格式发送到接口
+首先需要配置ip白名单，允许调用。接下来按照格式发送到接口,prometheus alertmanager 传送给webhook也是这些json，这个web服务只是对json做了解析
 post json方式按照下列格式传入 {"receiver":"receiver_name",\
 alerts:{"annotations":{"description":"game over one"},"annotations": {"description":"game over two"}}
-接口地址：http://XXXXX.com/sendmessage/ 
+
+
+接口地址：http://XXXXX.com:8080/sendmessage/ 
+
+.
+
+
 
 该服务的db是用sqllite，所以如果单独出去跑的话，需要把sqllite数据文件挂载出来
 
