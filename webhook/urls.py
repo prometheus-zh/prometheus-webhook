@@ -13,12 +13,13 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url,include
+from django.conf.urls import url, include
 from webhook.view import *
 from django.contrib import admin
 admin.autodiscover()
 urlpatterns = [
     url(r'^$',index),
     url(r'^sendmessage/$', sendmessage),
+    url(r'^sendmessage/wechat/$', sendwechat),
     url(r'^admin/', include(admin.site.urls)),
 ]

@@ -8,8 +8,8 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-admin.AdminSite.site_header = "梦想加--告警配置"
-admin.AdminSite.site_title = "梦想加--告警配置"
+admin.AdminSite.site_header = "合时代--告警配置"
+admin.AdminSite.site_title = "合时代--告警配置"
 
 class Email_ConfigAdmin(admin.ModelAdmin):
     list_display = ['smtp_host','smtp_port']
@@ -28,6 +28,11 @@ class SmtpConfig(forms.ModelForm):
     smtp_ssl = forms.TypedChoiceField(
                      choices=ssl_radio, widget=forms.RadioSelect, coerce=int
                 )
+
+
+class WechatConfig(admin.ModelAdmin):
+    list_display =['wechat_id']
+
 
 class SmsLog(admin.ModelAdmin):
     list_display = ['phone','content','date']
@@ -48,6 +53,24 @@ class SmsLog(admin.ModelAdmin):
 
 class EmailLog(admin.ModelAdmin):
     list_display = ['email','content','date']
+    def has_add_permission(self, request):
+        return False
+
+    #def has_delete_permission(self, request, obj=None):
+    #    return False
+
+    def save_model(self, request, obj, form, change):
+        return False
+
+    #def delete_model(self, request, obj):
+    #    return False
+
+    def save_related(self, request, form, formsets, change):
+        return False
+
+
+class WechatLog(admin.ModelAdmin):
+    list_display = ['wechat', 'content', 'status', 'date']
     def has_add_permission(self, request):
         return False
 
@@ -96,6 +119,7 @@ class UserChangeForm(forms.ModelForm):
         model = CmsUser
         fields = ('email', 'password', 'is_active', 'is_admin')
 
+
 class GroupAdmin(admin.ModelAdmin):
     list_display = ('name', 'remarks')
 
@@ -103,28 +127,31 @@ class GroupAdmin(admin.ModelAdmin):
 class UserAdmin(BaseUserAdmin):
     form = UserChangeForm
     add_form = UserCreationForm
-    list_display = ('username', 'email', 'phone','is_admin')
+    list_display = ('username', 'email', 'phone', 'wechat_id', 'is_admin')
     list_filter = ('is_admin',)
     fieldsets = (
       #  ('Primary info', {'fields': ('username', 'password')}),
-        ('Personal info', {'fields': ('username','email',  'phone', 'group')}),
+        ('Personal info', {'fields': ('username', 'email', 'wechat_id', 'phone', 'group')}),
 
     )
     add_fieldsets = (
         ('Add user', {
             'classes': ('wide',),
-            'fields': ('username', 'email',  'phone','password1', 'password2', 'group')}
+            'fields': ('username', 'email',  'phone', 'wechat_id', 'password1', 'password2', 'group')}
          ),
     )
     search_fields = ('username',)
     ordering = ('username',)
     filter_horizontal = ('group',)
 
-admin.site.register(Email_Config,Email_ConfigAdmin)
-admin.site.register(Sms_Config,Sms_ConfigAdmin)
-admin.site.register(Allow_Ip,Allow_IpAdmin)
+
+admin.site.register(Email_Config, Email_ConfigAdmin)
+admin.site.register(Wechat_Config, WechatConfig)
+admin.site.register(Sms_Config, Sms_ConfigAdmin)
+admin.site.register(Allow_Ip, Allow_IpAdmin)
 admin.site.register(CmsUser, UserAdmin)
 admin.site.register(CmsGroup, GroupAdmin)
-admin.site.register(Email_Log,EmailLog)
-admin.site.register(Sms_Log,SmsLog)
+admin.site.register(Email_Log, EmailLog)
+admin.site.register(Wechat_Log, WechatLog)
+admin.site.register(Sms_Log, SmsLog)
 admin.site.unregister(Group)

@@ -40,6 +40,7 @@ class CmsUser(AbstractBaseUser):
     username = models.CharField(max_length=32, unique=True, db_index=True,verbose_name='姓名')
     email = models.EmailField(max_length=255, unique=True, blank=True)
     phone = models.CharField(max_length=11,verbose_name="电话号码",blank=True,null=True)
+    wechat_id = models.CharField(max_length=32, unique=True, null=True, verbose_name='微信号')
     name = models.CharField(max_length=100, verbose_name='中文名',blank=True,null=True)
     head_img = models.ImageField(blank=True, upload_to="uploads/portrait", verbose_name='头像')
     group = models.ManyToManyField('CmsGroup',verbose_name='所属告警组')
@@ -111,7 +112,9 @@ class Sms_Log(models.Model):
     class Meta:
         verbose_name_plural = u'短信日志'
 
+
 class Email_Log(models.Model):
+
     email = models.CharField(max_length=500,blank=True,null=True)
     content = models.CharField(max_length=500,blank=True,null=True)
     status = models.CharField(max_length=500,blank=True,null=True)
@@ -119,6 +122,25 @@ class Email_Log(models.Model):
 
     class Meta:
         verbose_name_plural = u'邮件日志'
+
+
+class Wechat_Config(models.Model):
+    wechat_id = models.CharField(verbose_name="企业号ID", max_length=70, unique=True)
+    wechat_agent_id = models.IntegerField(verbose_name="anent id")
+    wechat_key = models.CharField(verbose_name="企业号KEY", max_length=128)
+
+    class Meta:
+        verbose_name_plural = u'微信企业号配置'
+
+class Wechat_Log(models.Model):
+
+    wechat = models.CharField(max_length=500, blank=True, null=True)
+    content = models.CharField(max_length=500, blank=True, null=True)
+    status = models.CharField(max_length=500, blank=True, null=True)
+    date = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    class Meta:
+        verbose_name_plural = u'微信日志'
 
 
 class Allow_Ip(models.Model):

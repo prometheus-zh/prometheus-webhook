@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-from models import Email_Config,Email_Log
+from models import Email_Config, Email_Log
 import smtplib
 import email
 from email.mime.multipart import MIMEMultipart
