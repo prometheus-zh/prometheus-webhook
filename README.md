@@ -1,11 +1,9 @@
 # prometheus-webhook
 
+---
+用于prometheus webwook接口报警。该服务主要是云片网的接口短信报警和邮件报警。必须要添加告警组，将用户添加到告警组中即可。报警的时候是以组为单位。db用的是sqllite. 简单易用。其他的报警抑制 沉默就靠prometheus了。
 
- ---
-用于prometheus webwook接口报警。该服务主要是云片网的接口短信报警和邮件报警。必须要添加告警组，将用户添加到告警组中即可。报警的时候是以组为单位。
- db用的是sqllite. 简单易用。其他的报警抑制 沉默就靠prometheus了。
- ---
- 
+---
 ### Install：
  ```
  git clone https://github.com/prometheus-zh/prometheus-webhook.git
@@ -30,17 +28,21 @@
 
 * 日志:分别记录了短信和邮件的发送状态日志和时间
 
-### 如何调用告警接口
+### 调用告警接口
 
 
 
-首先需要配置ip白名单，允许调用。接下来按照格式发送到接口,prometheus alertmanager 传送给webhook也是这些json，这个web服务只是对json做了解析
-post json方式按照下列格式传入 {"receiver":"receiver_name",\
+* 首先需要配置ip白名单，允许调用。
+* 接下来按照格式发送到接口,prometheus alertmanager 传送给webhook也是这些json，这个web服务只是对json做了解析
+post json方式按照下列格式传入 
+```
+{"receiver":"receiver_name",\
 alerts:{"annotations":{"description":"game over one"},"annotations": {"description":"game over two"}}
+```
+* 接口地址：http://XXXXX.com:8080/sendmessage/ 
 
-接口地址：http://XXXXX.com:8080/sendmessage/ 
-该服务的db是用sqllite，所以如果单独出去跑的话，需要把sqllite数据文件挂载出来
+* 该服务的db是用sqllite，所以如果单独出去跑的话，需要把sqllite数据文件挂载出来
 ---
-# 对了 我这里卖新疆阿克苏冰糖心苹果  感兴趣加微信 18612615725 请注明买苹果 否则不加哈
+# 对了 我这里卖新疆阿克苏冰糖心苹果,感兴趣加微信 18612615725 请注明买苹果 否则不加哈
 ---
 
