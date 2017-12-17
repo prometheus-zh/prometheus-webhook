@@ -5,14 +5,14 @@ from django.shortcuts import render_to_response,get_object_or_404
 from django.http import HttpResponse,HttpResponseRedirect
 from django.views.decorators.csrf import csrf_exempt
 import json
-from webhook.sendinfo import SendAlert
+from webhook.sendinfo import SendAlert, SendAlert_wechat
 from webhook.alertwechat import wechat_msg
 
 import sys
 reload(sys)
 sys.setdefaultencoding('utf-8')
 
-
+# 此方法可以发送 微信， 邮件， 短信
 @csrf_exempt
 def sendmessage(request):
     '''
@@ -38,6 +38,8 @@ def index(request):
     return HttpResponseRedirect('/admin')
 
 
+@csrf_exempt
+# 此方法可以发送只发送微信
 def sendwechat(request):
     '''
       post {"receiver":"receiver_name",\
@@ -56,7 +58,7 @@ def sendwechat(request):
                 lev = (body['alerts'][0].get('labels').get('severity'))
             except:
                 print('error json')
-            SendAlert(receiver, msg, lev=lev)
+            SendAlert_wechat(receiver, msg, lev=lev)
             #  wechat_msg(w_id=['yifansky'], g_id=None, level=lev, details=msg)
     html = "<html><body>OK</body></html>"
     return HttpResponse(html)

@@ -52,7 +52,7 @@ class SmsLog(admin.ModelAdmin):
         return False
 
 class EmailLog(admin.ModelAdmin):
-    list_display = ['email','content','date']
+    list_display = ['email','content', 'status', 'date']
     def has_add_permission(self, request):
         return False
 
