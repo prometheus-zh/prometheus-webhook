@@ -8,8 +8,8 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.contrib.auth.forms import ReadOnlyPasswordHashField
 
-admin.AdminSite.site_header = "合时代--告警配置"
-admin.AdminSite.site_title = "合时代--告警配置"
+admin.AdminSite.site_header = "告警配置"
+admin.AdminSite.site_title = "告警配置"
 
 class Email_ConfigAdmin(admin.ModelAdmin):
     list_display = ['smtp_host','smtp_port']
