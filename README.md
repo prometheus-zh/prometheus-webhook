@@ -41,8 +41,9 @@ post json方式按照下列格式传入
 {"receiver":"receiver_name",\
 alerts:{"annotations":{"description":"game over one"},"annotations": {"description":"game over two"}}
 ```
-* 接口地址：http://XXXXX.com:8080/sendmessage/ 
 
+* 短信邮件接口地址：http://XXXXX.com:8080/sendmessage/ 
+* 微信接口地址：http://XXXXX.com:8080/sendmessage/wechat
 * 该服务的db是用sqllite，所以如果单独出去跑的话，需要把sqllite数据文件挂载出来
 ---
 # 对了 我这里卖新疆阿克苏冰糖心苹果,感兴趣加微信 18612615725 请注明买苹果 否则不加哈
