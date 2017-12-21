@@ -1,7 +1,9 @@
 # coding:utf8
 from models import Wechat_Config, Wechat_Log
 import requests
-import json, time
+import json
+from datetime import datetime
+
 
 def get_token():
     url = 'https://qyapi.weixin.qq.com/cgi-bin/gettoken'
@@ -32,7 +34,7 @@ def wechat_msg(w_id, level="xx", details="yy"):
            "agentid": Wechat_Config.objects.get(pk=1).wechat_agent_id,
            #  'title': u"标题: Prometheus警报信息",
            "text": {
-               "content": u"标题: Prometheus警报信息 \n\n等级：%s \n\n详情: %s" % (level, details)
+               "content": u"标题: Prometheus警报信息 \n等级：%s \n 时间: %s \n详情: %s" % (level, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), details)
            }
            #  "description": "<div class=\"gray\">%s</div>"
            # " <div class=%s>%s</div>" % (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), style, details),
@@ -43,6 +45,5 @@ def wechat_msg(w_id, level="xx", details="yy"):
         print('sed``````````````````')
     rs = Wechat_Log.objects.create(wechat=w_id, content=details, status=status)
     rs.save()
-
 
 
