@@ -44,7 +44,8 @@ def SendAlert_wechat(receiver, alert_content, lev=None):
         wechat_msg(w_id=towechat_list, details=alert_content, level=lev)
         print(towechat_list)
         print('send wechating')
-    except:
+    except Exception as e:
+        print (e)
         print 'send wechat error'
 
 
