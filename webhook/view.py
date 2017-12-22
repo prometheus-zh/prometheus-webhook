@@ -62,7 +62,6 @@ def sendwechat(request):
                     msg = str(alert['annotations']['description'])
                     lev = str(alert['labels']['severity'])
                     print(status)
-
                 except:
                     print('error json')
                 SendAlert_wechat(receiver, title, startsAt, status, msg, lev=lev)
