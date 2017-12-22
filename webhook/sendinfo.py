@@ -33,7 +33,7 @@ def SendAlert(receiver, alert_content, lev=None):
         print 'send wechat error'
 
 
-def SendAlert_wechat(receiver, alert_content, lev=None):
+def SendAlert_wechat(w_id, title, startsAt,  status, alert_content, lev=None):
     towechat_list = list()
     send_list = CmsUser.objects.filter(group__name=receiver)
     for send_r in send_list:
@@ -41,7 +41,7 @@ def SendAlert_wechat(receiver, alert_content, lev=None):
         towechat_list.append(send_r.wechat_id)
 
     try:
-        wechat_msg(w_id=towechat_list, details=alert_content, level=lev)
+        wechat_msg(w_id=w_id, title=title, startsAt=startsAt, status=status, details=alert_content, level=lev)
         print(towechat_list)
         print('send wechating')
     except Exception as e:
