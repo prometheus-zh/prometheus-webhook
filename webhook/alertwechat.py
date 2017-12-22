@@ -16,7 +16,7 @@ def get_token():
     return data["access_token"]
 
 
-def wechat_msg(w_id, level="xx", details="yy"):
+def wechat_msg(w_id, title, startsAt,  status, level="xx", details="yy"):
     url = ("https://qyapi.weixin.qq.com/cgi-bin/message/send"
           "?access_token={}").format(get_token())
     if level == "fatal":
@@ -34,7 +34,8 @@ def wechat_msg(w_id, level="xx", details="yy"):
            "agentid": Wechat_Config.objects.get(pk=1).wechat_agent_id,
            #  'title': u"标题: Prometheus警报信息",
            "text": {
-               "content": u"标题: Prometheus警报信息 \n等级：%s \n 时间: %s \n详情: %s" % (level, datetime.now().strftime('%Y-%m-%d %H:%M:%S'), details)
+               "content": u"标题: %s \n状态: %s 等级：%s \n 时间: %s \n详情: %s" %
+                          (title, status, level, startsAt, details)
            }
            #  "description": "<div class=\"gray\">%s</div>"
            # " <div class=%s>%s</div>" % (time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()), style, details),
