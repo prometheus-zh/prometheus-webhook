@@ -54,11 +54,15 @@ def sendwechat(request):
             receiver = body['receiver']
             print(body['alerts'])
             try:
+                title = body['alerts'][0].get('labels').get('alertname')
+                startsAt = body['alerts'][0].get('startsAt').split('.')[0]
+                status = body['body']
                 msg = (body['alerts'][0].get('annotations').get('description'))
                 lev = (body['alerts'][0].get('labels').get('severity'))
+
             except:
                 print('error json')
-            SendAlert_wechat(receiver, msg, lev=lev)
+            SendAlert_wechat(receiver, title, startsAt, status, msg, lev=lev)
             #  wechat_msg(w_id=['yifansky'], g_id=None, level=lev, details=msg)
     html = "<html><body>OK</body></html>"
     return HttpResponse(html)
