@@ -8,8 +8,8 @@ from datetime import datetime
 def get_token():
     url = 'https://qyapi.weixin.qq.com/cgi-bin/gettoken'
     values = {
-        'corpid': Wechat_Config.objects.get(pk=1).wechat_id,
-        'corpsecret': Wechat_Config.objects.get(pk=1).wechat_key,
+        'corpid': Wechat_Config.objects.get(pk=2).wechat_id,
+        'corpsecret': Wechat_Config.objects.get(pk=2).wechat_key,
        }
     req = requests.post(url, params=values)
     data = json.loads(req.text)
@@ -31,7 +31,7 @@ def wechat_msg(w_id, title, startsAt,  status, level="xx", details="yy"):
         values = {
            "touser": i,
            "msgtype": "text",
-           "agentid": Wechat_Config.objects.get(pk=1).wechat_agent_id,
+           "agentid": Wechat_Config.objects.get(pk=2).wechat_agent_id,
            #  'title': u"标题: Prometheus警报信息",
            "text": {
                "content": u"标题: %s \n状态: %s 等级：%s \n 时间: %s \n详情: %s" %
