@@ -41,7 +41,7 @@ def SendAlert_wechat(receiver, title, startsAt,  status, alert_content, lev=None
         towechat_list.append(send_r.wechat_id)
 
     try:
-        wechat_msg(w_id=receiver, title=title, startsAt=startsAt, status=status, details=alert_content, level=lev)
+        wechat_msg(receiver, title, startsAt, status, details=alert_content, level=lev)
         print(towechat_list)
         print('send wechating')
     except Exception as e:
