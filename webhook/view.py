@@ -57,7 +57,7 @@ def sendwechat(request):
                 try:
                     title = str(alert['labels']['alertname'])
                     # title = body['alerts'][0].get('labels').get('alertname')
-                    startsAt = str(alert['annotations']['startsAt']).split('.')[0].replace('T', ' ')
+                    startsAt = str(['startsAt']).split('.')[0].replace('T', ' ')
                     status = body['status']
                     msg = str(alert['annotations']['description'])
                     lev = str(alert['annotations']['severity'])
