@@ -60,7 +60,7 @@ def sendwechat(request):
                     startsAt = str(['startsAt']).split('.')[0].replace('T', ' ')
                     status = body['status']
                     msg = str(alert['annotations']['description'])
-                    lev = str(alert['annotations']['severity'])
+                    lev = str(alert['labels']['severity'])
                     print(status)
 
                 except:
