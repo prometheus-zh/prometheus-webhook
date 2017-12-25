@@ -8,9 +8,10 @@
  ```
  git clone https://github.com/prometheus-zh/prometheus-webhook.git
  cd prometheus-webhook 
+ pip install Pillow
+ python manage.py migrate
  python manager.py syncdb # 设置登录admin的账号密码 
  python runserver 0.0.0.0:8080 启动服务
- 
 ```
 
 
